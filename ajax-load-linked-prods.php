@@ -40,7 +40,7 @@ add_action('wp_footer', function () {
     $linked_products_settings = get_option('plgfymao_all_rulesplgfyplv');
 
     // DEBUG
-    delete_post_meta($product_id, 'sbwc_linked_product_html_cache_key');
+    // delete_post_meta($product_id, 'sbwc_linked_product_html_cache_key');
 
     // get cache key from product meta
     $cache_key = get_post_meta($product_id, 'sbwc_linked_product_html_cache_key', true);
