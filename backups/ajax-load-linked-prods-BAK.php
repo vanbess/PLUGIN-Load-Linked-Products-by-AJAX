@@ -36,6 +36,8 @@ add_action('wp_footer', function () {
     // get product id
     $product_id = get_the_ID();
 
+    echo do_shortcode('[product_page id="' . $product_id . '"]');
+
     // get linked products settings
     $linked_products_settings = get_option('plgfymao_all_rulesplgfyplv');
 
@@ -78,9 +80,9 @@ add_action('wp_footer', function () {
         var linked_product_html = [];
 
         // loop through .aclass-clr and fetch product single content for each linked product, pushing href and html to array
-        $('.imgclasssmall').each(function(i,e) {
+        $('.navplugify').find('.imgclasssmall').each(function(i, e) {
 
-            console.log('looping through .imgclasssmall '+i);
+            console.log('looping through .imgclasssmall ' + i);
 
             // get first a element
             var a = $(this).find('a').eq(0);
@@ -102,7 +104,7 @@ add_action('wp_footer', function () {
 
         });
 
-        // console.log(linked_product_html);
+        console.log(linked_product_html);
 
 
         // load product content via AJAX when variation link is clicked
@@ -110,103 +112,98 @@ add_action('wp_footer', function () {
 
         //     event.preventDefault();
 
-        // //    fetch page content using value of href
+        //     //    fetch page content using value of href
 
-        // // Get the href attribute of the clicked link
-        // var href = $(this).attr('href');
+        //     // Get the href attribute of the clicked link
+        //     var href = $(this).attr('href');
 
-        // // Use jQuery's $.get method to fetch the content
-        // $.get(href, function (data) {
-        //     // 'data' contains the fetched content
+        //     // Use jQuery's $.get method to fetch the content
+        //     $.get(href, function(data) {
+        //         // 'data' contains the fetched content
 
-        //     // console.log(data);
+        //         // console.log(data);
 
-        //     // replace current document with new document
-        //     document.open();
+        //         // replace current document with new document
+        //         document.open();
 
-        //     document.write(data);
+        //         document.write(data);
 
-        //     document.close();
+        //         document.close();
 
-        //     // set current location
-        //     window.history.pushState("", "", href);
+        //         // set current location
+        //         window.history.pushState("", "", href);
+
+        //         // create temp cont
+        //         // var temp_cont = $('<div></div>');
+
+        //         // // append data to temp cont
+        //         // temp_cont.append(data);
+
+        //         // // find body
+        //         // var main = temp_cont.find('body').html();
+
+        //         // // console.log(main);
+
+        //         // // replace #main with main
+        //         // $('body').replaceWith(main);
+
+        //         // You can now manipulate or display the content
+        //         // $('#content-container').html(data);
+        //     });
 
 
 
-        //     // create temp cont
-        //     // var temp_cont = $('<div></div>');
-
-        //     // // append data to temp cont
-        //     // temp_cont.append(data);
-
-        //     // // find body
-        //     // var main = temp_cont.find('body').html();
-
-        //     // // console.log(main);
-
-        //     // // replace #main with main
-        //     // $('body').replaceWith(main);
-
-        //     // You can now manipulate or display the content
-        //     // $('#content-container').html(data);
         // });
 
+        // get current permalink
+        var current_permalink = window.location.href;
 
+        // append link to default image
+        let link = '<a style="opacity: 0" class="aclass-clr" href="' + current_permalink + '"></a>';
+        $('.imgclasssmallactive').removeClass().addClass('imgclasssmall').css('cursor', 'pointer').prepend(link).find('.child_class_plugify').append(link);
+
+        // append container to body for testing
+        $('body').append('<div id="sbwc-ajax-load-linked-products-container"></div>');
+
+        // get each .aclass-clr href attribute and append to array
+        var linked_product_urls = [];
+
+        // add current permalink to array
+        linked_product_urls.push(current_permalink);
+
+        $('.aclass-clr').each(function() {
+
+            // if not in array, add to array
+            if (linked_product_urls.indexOf($(this).attr('href')) === -1) {
+                linked_product_urls.push($(this).attr('href'));
+            }
 
         });
 
-        // // get current permalink
-        // var current_permalink = window.location.href;
+        // loop through linked product urls and send ajax request to fetch product single content
+        $.each(linked_product_urls, function(i, v) {
 
-        // // fix default variation form
-        // let link = '<a style="opacity: 0" class="aclass-clr" href="' + current_permalink + '"></a>';
-        // $('.imgclasssmallactive').removeClass().addClass('imgclasssmall').css('cursor', 'pointer').prepend(link).find('.child_class_plugify').append(link);
+            // send ajax request
+            $.ajax({
+                url: '<?php echo admin_url('admin-ajax.php') ?>',
+                type: 'POST',
+                data: {
+                    linked_product_url: v,
+                    action: 'sbwc_ajax_load_linked_products',
+                    _ajax_nonce: '<?php echo wp_create_nonce('sbwc_ajax_load_linked_products_nonce'); ?>'
+                },
+                success: function(response) {
 
-        // // append container to body for testing
-        // $('body').append('<div id="sbwc-ajax-load-linked-products-container"></div>');
-
-        // // get each .aclass-clr href attribute and append to array
-        // var linked_product_urls = [];
-
-        // // add current permalink to array
-        // linked_product_urls.push(current_permalink);
-
-        // $('.aclass-clr').each(function() {
-
-        //     // if not in array, add to array
-        //     if (linked_product_urls.indexOf($(this).attr('href')) === -1) {
-        //         linked_product_urls.push($(this).attr('href'));
-        //     }
-
-        // });
-
-        // // loop through linked product urls and send ajax request to fetch product single content
-        // $.each(linked_product_urls, function(i, v) {
-
-        //     // send ajax request
-        //     $.ajax({
-        //         url: '<?php echo admin_url('admin-ajax.php') ?>',
-        //         type: 'POST',
-        //         data: {
-        //             linked_product_url: v,
-        //             action: 'sbwc_ajax_load_linked_products',
-        //             _ajax_nonce: '<?php echo wp_create_nonce('sbwc_ajax_load_linked_products_nonce'); ?>'
-        //         },
-        //         success: function(response) {
-
-        //             console.log(response);
+                    console.log('response: ' + response);
 
 
 
-        //             // $('.aclass-clr[href="' + v + '"]').attr('data-linked_data', JSON.stringify(response));
+                    // $('.aclass-clr[href="' + v + '"]').attr('data-linked_data', JSON.stringify(response));
 
-        //         },
-        //         error: function(error) {
-        //             console.log(error);
-        //         }
-        //     });
+                }
+            });
 
-        // });
+        });
 
         // replace product single content with linked product content on click
         // $(document).on('click', '.imgclasssmall', function(e) {
@@ -509,6 +506,53 @@ function sbwc_ajax_load_linked_products()
         // get product object
         $linked_product = wc_get_product($linked_product_id);
 
+        ob_start();
+
+        defined('ABSPATH') || exit;
+
+        // Note: `wc_get_gallery_image_html` was added in WC 3.3.2 and did not exist prior. This check protects against theme overrides being used on older versions of WC.
+        if (!function_exists('wc_get_gallery_image_html')) {
+            return;
+        }
+
+        // global $product;
+
+        do_action('riode_single_product_before_image');
+
+        $columns           = apply_filters('woocommerce_product_thumbnails_columns', 4);
+        $post_thumbnail_id = $linked_product->get_image_id();
+        $wrapper_classes   = apply_filters(
+            'woocommerce_single_product_image_gallery_classes',
+            array(
+                'woocommerce-product-gallery',
+                'woocommerce-product-gallery--' . ($linked_product->get_image_id() ? 'with-images' : 'without-images'),
+                'woocommerce-product-gallery--columns-' . absint($columns),
+                'images',
+            )
+        );
+    ?>
+        <div class="<?php echo esc_attr(implode(' ', array_map('sanitize_html_class', $wrapper_classes))); ?>" data-columns="<?php echo esc_attr($columns); ?>">
+
+            <?php do_action('riode_before_wc_gallery_figure'); ?>
+
+            <figure class="<?php echo esc_attr(implode(' ', apply_filters('riode_single_product_gallery_main_classes', array('woocommerce-product-gallery__wrapper')))); ?>">
+                <?php
+                do_action('riode_before_product_gallery');
+                do_action('riode_woocommerce_product_images');
+                do_action('woocommerce_product_thumbnails');
+                do_action('riode_after_product_gallery');
+                ?>
+            </figure>
+
+            <?php do_action('riode_after_wc_gallery_figure'); ?>
+
+        </div>
+
+        <?php
+
+        print ob_get_clean();
+        wp_die();
+
         // global $product
         global $product;
 
@@ -557,7 +601,7 @@ function sbwc_ajax_load_linked_products()
                 'images',
             )
         );
-    ?>
+        ?>
         <div class="<?php echo esc_attr(implode(' ', array_map('sanitize_html_class', $wrapper_classes))); ?>" data-columns="<?php echo esc_attr($columns); ?>">
 
             <?php do_action('riode_before_wc_gallery_figure'); ?>
