@@ -159,6 +159,7 @@ add_action('wp_footer', function () {
             // loop through linked product urls and send ajax request to fetch product single content
             $.each(linked_product_urls, function(i, v) {
 
+                // define deferred
                 var deferred = $.Deferred();
 
                 // send ajax request to fetch product single content
@@ -208,6 +209,7 @@ add_action('wp_footer', function () {
                 // get product id from href
                 var product_id = href.split('/').pop();
 
+                // set CSS
                 $('.imgclasssmall, .imgclasssmallactive').css({
                     'outline': 'none',
                     'outline-offset': 'none',
@@ -314,6 +316,7 @@ add_action('wp_footer', function () {
                 // Get all the .imgclasssmall elements
                 var containers = $('*[class*="imgclasssmall"]');
 
+                // Get the parent of the first .imgclasssmall element
                 var parent = $('.navplugify > div');
 
                 // Sort the .imgclasssmall elements based on the value of their child <a> element's href attribute
@@ -323,6 +326,7 @@ add_action('wp_footer', function () {
                     return aText.localeCompare(bText);
                 });
 
+                // Remove second (unused) product gallery html
                 $('.elementor-widget-riode_sproduct_image').eq(1).remove();
 
                 // Remove the sorted elements from their current location in the HTML
@@ -496,11 +500,8 @@ add_action('wp_footer', function () {
 
                 // remove class and/or any empty attributes named 'class' from .pa_size button elements
                 $('.pa_size').find('button').each(function(e) {
-
                     $(this).removeClass().removeAttr('class');
-
                 });
-
 
                 // size on click
                 $('.pa_size').on('click mousedown', 'button', function(event) {
@@ -602,6 +603,7 @@ function sbwc_ajax_fetch_linked_prods_html()
     // get pswp container
     $pswp_container = $pswp->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' pswp ')]");
 
+    // return array
     $return['.pswp'] = $pswp_container->item(0)->ownerDocument->saveHTML($pswp_container->item(0));
     $return['product_html'] = $product_html;
 
