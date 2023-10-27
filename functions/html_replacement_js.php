@@ -141,19 +141,42 @@ global $linked_products_ajax_variations, $linked_product_id_initial;
             // console.log('new dl:');
             // console.log(linked_gtm_data_layer);
 
-            // empty current data layer (accessible via global variable dataLayer)
-            dataLayer[0] = '';
-
             // DEBUG
             // console.log('current dl: ');
-            // console.log(dataLayer);
+            // console.log(window.dataLayer);
+
+            // empty current data layer (accessible via global variable dataLayer)
+            window.dataLayer[0] = [];
 
             // set updated data layer
-            dataLayer[0] = linked_gtm_data_layer;
+            window.dataLayer[0] = linked_gtm_data_layer;
 
             // DEBUG
             // console.log('updated data_store');
-            // console.log(dataLayer);
+            // console.log(window.dataLayer);
+
+            // remove old gtm.js script(s)
+            let oldScripts = document.querySelectorAll("script[src^='//www.googletagmanager.com/gtm.js']");
+
+            oldScripts.forEach(function(script) {
+                script.remove();
+            });
+
+            // add new gtm.js script
+            (function(w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({
+                    'gtm.start': new Date().getTime(),
+                    event: 'gtm.js'
+                });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-K58QDD');
+
 
             // remove disabled class from #size-select-prompt
             $('#size-select-prompt').removeClass('disabled');
