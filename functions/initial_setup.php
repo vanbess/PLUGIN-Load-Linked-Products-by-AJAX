@@ -2,9 +2,6 @@
 
 defined('ABSPATH') or die();
 
-// global $linked_products_ajax_variations, $linked_product_id;
-global $linked_products_ajax_variations, $linked_product_id_initial;
-
 // get product id
 $linked_product_id_initial = get_the_ID();
 
@@ -39,27 +36,10 @@ if (!in_array($linked_product_id_initial, $linked_product_ids)) :
     $linked_product_ids[] = $linked_product_id_initial;
 endif;
 
-// available variations array which holds all available variations for all linked products
-$linked_products_ajax_variations = array();
+?>
 
-// loop through linked product ids and get available variations for each
-foreach ($linked_product_ids as $linked_product_id) :
+<input type="hidden" id="sbwc-linked-init-id" value="<?php echo $linked_product_id_initial; ?>">
 
-    // get product object
-    $product = wc_get_product($linked_product_id);
+<input type="hidden" id="sbwc-linked-aj-url" value="<?php echo admin_url('admin-ajax.php'); ?>">
 
-    // get available variations
-    $product_available_variations = $product->get_available_variations();
-
-    // loop through available variations and add to available variations array
-    foreach ($product_available_variations as $product_available_variation) :
-
-        // add to available variations array
-        $linked_products_ajax_variations[$product->get_permalink()][] = $product_available_variation;
-
-    endforeach;
-
-endforeach;
-
-// debug: output available variations to file
-// file_put_contents(sbwc_ajax_fetch_linked_prods_html_PATH . 'available-variations-all-linked.txt', print_r($available_variations, true));
+<input type="hidden" id="sbwc-linked-aj-nonce" value="<?php echo wp_create_nonce('sbwc_ajax_fetch_linked_prods_html_nonce'); ?>">
