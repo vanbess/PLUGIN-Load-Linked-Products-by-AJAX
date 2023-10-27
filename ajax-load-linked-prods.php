@@ -3,7 +3,7 @@
 Plugin Name: SBWC AJAX Load Linked Products
 Plugin URI: 
 Description: Loads linked products (as set up via plugin Products Linked by Variations for WooCommerce) via AJAX on the single product page. Requires the Products Linked by Variations for WooCommerce plugin to be installed and activated.
-Version: 1.0.6
+Version: 1.0.7
 Author: WC Bessinger
 Author URI: 
 License: GPL2
@@ -43,6 +43,7 @@ add_action('init', function(){
     
 });
 
+// Enqueue scripts
 add_action('wp_enqueue_scripts', function(){
     wp_enqueue_script('sbwc-ajax-fetch-linked-prods-html', sbwc_ajax_fetch_linked_prods_html_URI . 'assets/sbwc.linked.by.var.ajax.js', array('jquery'), '1.0.6', true);
 });

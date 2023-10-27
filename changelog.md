@@ -23,3 +23,8 @@
 - Add changelog.md
 - Add functionality to update Google Tag Manager data layer to reflect currently selected product/currently active client accurately
 - Change all variables to block scope to avoid conflicts with other plugins and/or themes and/or scripts
+
+## [1.0.7] - 2023-10-27
+
+### Added
+- Dedicated JS script for caching purposes
