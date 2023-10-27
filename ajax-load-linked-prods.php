@@ -45,6 +45,6 @@ add_action('init', function(){
 
 // Enqueue scripts
 add_action('wp_enqueue_scripts', function(){
-    wp_enqueue_script('sbwc-ajax-fetch-linked-prods-html', sbwc_ajax_fetch_linked_prods_html_URI . 'assets/sbwc.linked.by.var.ajax.js', array('jquery'), '1.0.6', true);
+    wp_enqueue_script('sbwc-ajax-fetch-linked-prods-html', sbwc_ajax_fetch_linked_prods_html_URI . 'assets/sbwc.linked.by.var.ajax.js', array('jquery'), '1.0.7', true);
 });
 
