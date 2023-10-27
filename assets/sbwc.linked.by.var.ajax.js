@@ -11,9 +11,6 @@
     // DEBUG
     // console.log(gtm_data_layer);
 
-    // target container for replacing content
-    let to_replace = $('#product-' + init_product_id);
-
     // holds linked product html
     let linked_product_html = [];
 
@@ -48,9 +45,6 @@
         }
 
     });
-
-    // replacement html array (link => html)
-    let replacement_html = {};
 
     // holds deferred objects for each AJAX request
     let deferreds = [];

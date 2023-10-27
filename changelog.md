@@ -28,3 +28,4 @@
 
 ### Added
 - Dedicated JS script for caching purposes
+- Removed unused variables in JS script
