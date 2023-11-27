@@ -463,12 +463,12 @@
         });
 
         // remove class and/or any empty attributes named 'class' from .pa_size button elements
-        $('.pa_size').find('button').each(function (e) {
+        $('.product-variations').find('button').each(function (e) {
             $(this).removeClass().removeAttr('class');
         });
 
-        // size on click
-        $('.pa_size').on('click mousedown', 'button', function (event) {
+        $('.product-variations > button').on('click', function (event) {
+
 
             // stop propagation
             event.stopPropagation();
@@ -483,10 +483,14 @@
             // get variation data from form and find matching variation id
             let variation_data = JSON.parse($('.cart').attr('data-product_variations'));
 
+            // debug
+            // console.log(variation_data);
+
             $.each(variation_data, function (i, v) {
 
                 let attributes = v.attributes;
-                let attr_val = attributes.attribute_pa_size;
+
+                let attr_val = attributes['attribute_pa_size'] ? attributes['attribute_pa_size'] : attributes['attribute_pa_shoes-size'];
 
                 if (attr_val == $(event.target).attr('name')) {
 
@@ -503,6 +507,18 @@
 
             // add disabled class to #size-select-prompt
             $('#size-select-prompt').addClass('disabled');
+
+
+        });
+
+        // on added to cart, trigger refresh fragments
+        $(document.body).on('added_to_cart', function (event, fragments, cart_hash, $button) {
+
+            // DEBUG
+            // console.log('added_to_cart');
+
+            // trigger refresh fragments
+            $(document.body).trigger('wc_fragment_refresh');
 
         });
 
