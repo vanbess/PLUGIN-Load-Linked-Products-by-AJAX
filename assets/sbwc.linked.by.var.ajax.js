@@ -100,7 +100,15 @@
         // get href
         let href = a.attr('href');
 
-        // get gtm data layer from data store
+        // DEBUG
+        // console.log(data_store);
+
+        if (!data_store.hasOwnProperty(href)) {
+            console.error('data_store does not yet contain href: ' + href);
+            return;
+        }
+
+        // check if data_store contains href before proceeding
         let linked_gtm_data_layer = JSON.parse(data_store[href]['gtm_data_layer']);
 
         // compare linked gtm data layer to current gtm data layer and replace empty values in linked gtm data layer with current gtm data layer values
@@ -403,7 +411,10 @@
             let first_a = $(this).find('a').eq(0);
 
             // get a > first img srcset
-            let srcset = first_a.find('img').eq(0).attr('srcset');
+            let srcset = first_a.find('img').eq(0).attr('srcset') ? first_a.find('img').eq(0).attr('srcset') : first_a.find('img').eq(0).attr('data-srcset');
+
+            // debug
+            // console.log(srcset);
 
             // get last item in srcset
             let src = srcset.split(',').pop().trim().split(' ')[0];
