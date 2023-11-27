@@ -124,7 +124,7 @@
 
         // DEBUG
         // console.log('data_store');
-        // console.log(data_store);
+        console.log(data_store);
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~
         // linked swatch on click
@@ -243,6 +243,9 @@
             // get data-html-encoded attribute
             let linked_products_html_encoded = data_store[href]['product_html'];
 
+            // price html
+            let price_html = data_store[href]['price_html'];
+
             // temp div
             let temp_div = $('<div></div>');
 
@@ -271,12 +274,12 @@
             let rating = elementor_column_2.find('.elementor-widget-riode_sproduct_rating').eq(0);
 
             // find price in elementor_column_2
-            let price = elementor_column_2.find('.elementor-widget-riode_sproduct_price').eq(0);
+            // let price = elementor_column_2.find('.elementor-widget-riode_sproduct_price').eq(0);
 
             // debug
-            console.log(price);
-            console.log(price['0'].innerHTML);
-            console.log(price['0'].innerText);
+            // console.log(price);
+            // console.log(price['0'].innerHTML);
+            // console.log(price['0'].innerText);
 
             // get .cart 
             let cart_form = elementor_column_2.find('.cart').eq(0);
@@ -311,7 +314,7 @@
             // replace all relevant html and cart form attributes along with hidden input values
             $('.elementor-widget-riode_sproduct_title').replaceWith(title);
             $('.elementor-widget-riode_sproduct_rating').replaceWith(rating);
-            $('.elementor-widget-riode_sproduct_price').replaceWith(price);
+            $('.elementor-widget-riode_sproduct_price > .elementor-widget-container > .price').html(price_html);
             $('.cart').attr('action', action);
             $('.cart').attr('data-product_id', product_id);
             $('.cart').attr('data-product_variations', variation_data);

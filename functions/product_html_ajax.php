@@ -25,6 +25,15 @@ function sbwc_ajax_fetch_linked_prods_html()
     // get id from url
     $linked_product_id = url_to_postid($linked_product_url);
 
+    // get current ALG currency
+    $currency = alg_get_current_currency_code();
+
+    // init product object
+    $product = wc_get_product($linked_product_id);
+
+    // get price html
+    $price_html = $product->get_price_html();
+
     // fetch product page via curl
     $ch = curl_init();
 
@@ -96,6 +105,8 @@ function sbwc_ajax_fetch_linked_prods_html()
     $return['product_html']   = $product_html;
     $return['gtm_main']       = $gtm_main;
     $return['gtm_data_layer'] = $gtm_data_layer;
+    $return['price_html']     = $price_html;
+    $return['currency']       = $currency;
 
     wp_send_json($return);
 }
