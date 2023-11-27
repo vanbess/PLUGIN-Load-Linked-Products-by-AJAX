@@ -124,7 +124,7 @@
 
         // DEBUG
         // console.log('data_store');
-        console.log(data_store);
+        // console.log(data_store);
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~
         // linked swatch on click
@@ -138,9 +138,6 @@
 
             // get href
             let href = a.attr('href');
-
-            // DEBUG
-            // console.log(data_store);
 
             if (!data_store.hasOwnProperty(href)) {
                 console.error('SBWC Linked by Variation AJAX plugin: data_store does not yet contain href ' + href);
