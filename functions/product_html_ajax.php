@@ -77,6 +77,8 @@ function sbwc_ajax_fetch_linked_prods_html()
     // strip any text before and after curly braces in gtm data layer
     $gtm_data_layer = preg_replace('/^.*?({.*}).*$/s', '$1', $gtm_data_layer);
 
+    // wp_send_json($gtm_data_layer);
+
     // get product container
     $product_container = $dom->getElementById($target_id);
 
