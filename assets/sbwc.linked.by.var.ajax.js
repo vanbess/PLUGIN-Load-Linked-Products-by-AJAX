@@ -104,7 +104,7 @@
         // console.log(data_store);
 
         if (!data_store.hasOwnProperty(href)) {
-            console.error('data_store does not yet contain href: ' + href);
+            console.error('SBWC Linked by Variation AJAX plugin: data_store does not yet contain href ' + href);
             return;
         }
 
