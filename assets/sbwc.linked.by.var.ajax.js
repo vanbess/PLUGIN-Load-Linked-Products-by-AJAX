@@ -1,5 +1,10 @@
 (function ($) {
 
+    // bail if not on product page
+    if (!$('.single-product').length) {
+        return;
+    }
+
     // display css loader over #main
     $('#main').css('position', 'relative');
     
