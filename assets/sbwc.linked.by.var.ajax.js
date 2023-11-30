@@ -122,9 +122,12 @@
         // log ellapsed time in seconds
         console.log('SBWC AJAX Linked products time to load: ' + (endtime - starttime) / 1000);
 
-        // DEBUG
-        // console.log('data_store');
-        console.log(data_store);
+    // DEBUG
+    // $.when.apply($, deferreds).done(function() {
+    //     console.log('data_store');
+    //     console.log(data_store);
+    //     return;
+    // });
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~
         // linked swatch on click
@@ -139,21 +142,8 @@
             // get href
             let href = a.attr('href');
 
-            // DEBUG
-            // console.log(data_store);
-
-            if (!data_store.hasOwnProperty(href)) {
-                console.error('SBWC Linked by Variation AJAX plugin: data_store does not yet contain href ' + href);
-                return;
-            }
-
-            if (typeof data_store[href]['gtm_data_layer'] == 'undefined') {
-                console.error('SBWC Linked by Variation AJAX plugin: data_store[href][\'gtm_data_layer\'] is undefined');
-                return;
-            }
-
-            // check if data_store contains href before proceeding
-            let linked_gtm_data_layer = JSON.parse(data_store[href]['gtm_data_layer']);
+        // get gtm data layer from data store
+        let linked_gtm_data_layer = JSON.parse(data_store[href]['gtm_data_layer']);
 
             // compare linked gtm data layer to current gtm data layer and replace empty values in linked gtm data layer with current gtm data layer values
             $.each(linked_gtm_data_layer, function (i, v) {
