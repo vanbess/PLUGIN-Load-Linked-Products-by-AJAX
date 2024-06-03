@@ -1,4 +1,4 @@
-# SBWC Load Linked Products via AJAX
+# PLUGIN: Load Linked Products via AJAX (WooCommerce/Products Linked by Variations)
 
 Fetches products linked by variatons (set up via associated plugin *Products Linked by Variations for WooCommerce*) and allows them to load on same page instead of redirecting.
 
@@ -7,3 +7,5 @@ Fetches products linked by variatons (set up via associated plugin *Products Lin
 WP Cache and transients are used to store linked product HTML and replace the entire document on click instead of redirecting.
 
 Server side caching must be enabled for this plugin to work properly. Similary, any flags disabling wp_cache must be disabled in your wp-config.php file, unless you're using Redis or Memcached.
+
+NOTE: this is a bespoke plugin created for a client, so will likely require mods to work for your use case.
